@@ -1,6 +1,6 @@
 // app/login.jsx
 
-import { router } from "expo-router";
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
@@ -11,12 +11,12 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { account } from "../../lib/appwrite";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLogingIn, setIsLogingIn] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const router = useRouter();
 
   async function handleLogin() {
     if (!email || !password) {
@@ -24,23 +24,43 @@ export default function LoginScreen() {
       return;
     }
 
-    setIsLogingIn(true);
+    setIsLoggingIn(true);
+
+    // user login from appwrite auth
+    // try {
+    //   // Create email/password session
+    //   await account.createEmailPasswordSession(email, password);
+
+    //   //  Get user data
+    //   const user = await account.get();
+    //   console.log("Logged in user:", user);
+
+    //   // Navigate to home (replace with your real route)
+    //   router.replace("/home");
+    // } catch (err) {
+    //   console.error("Login failed:", err);
+    //   Alert.alert("Login Failed", err.message || "Invalid credentials.");
+    // } finally {
+    //   setIsLogingIn(false);
+    // }
 
     try {
-      // ✅ Create email/password session
-      await account.createEmailPasswordSession(email, password);
-
-      // ✅ Get user data
-      const user = await account.get();
-      console.log("Logged in user:", user);
-
-      // ✅ Navigate to home (replace with your real route)
+      const res = await fetch("https://anouvot.web.app/api/v1/auth/login", {
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
+      }
+      Alert.alert("Success", "You have logged in successfully!");
       router.replace("/home");
-    } catch (err) {
-      console.error("Login failed:", err);
-      Alert.alert("Login Failed", err.message || "Invalid credentials.");
+    } catch (error) {
+      console.error("Login failed:", error);
+      Alert.alert("Login Failed", error.message || "Something went wrong.");
     } finally {
-      setIsLogingIn(false);
+      setIsLoggingIn(false);
     }
   }
 
@@ -96,11 +116,11 @@ export default function LoginScreen() {
         {/* Sign In Button */}
         <TouchableOpacity
           onPress={handleLogin}
-          disabled={isLogingIn}
+          disabled={isLoggingIn}
           className="w-full bg-accent py-4 rounded-xl items-center shadow-lg"
         >
           <Text className="text-white text-xl font-bold">
-            {isLogingIn ? "Loging In..." : "Log In"}
+            {isLoggingIn ? "Loging In..." : "Log In"}
           </Text>
         </TouchableOpacity>
 
