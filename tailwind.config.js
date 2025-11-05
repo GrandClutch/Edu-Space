@@ -16,6 +16,12 @@ module.exports = {
         lightBg: "#AED2EA",
         darkBg: "#10266F",
       },
+      fontFamily: {
+        inter: ["Inter_400Regular", "sans-serif"],
+        interMedium: ["Inter_500Medium", "sans-serif"],
+        interSemiBold: ["Inter_600SemiBold", "sans-serif"],
+        interBold: ["Inter_700Bold", "sans-serif"],
+      },
     },
   },
   plugins: [],

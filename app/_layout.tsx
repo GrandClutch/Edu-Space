@@ -2,12 +2,30 @@
 
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import * as SplashScreen from "expo-splash-screen";
 import "react-native-reanimated";
 import "./global.css";
+import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from "@expo-google-fonts/inter";
+import { useEffect } from "react";
+import { View } from "react-native";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+  });
+
+  useEffect(() => {
+    if (fontsLoaded) SplashScreen.hideAsync();
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) return null;
   return (
-    <>
+    <View className="flex-1 bg-background font-inter">
       {/* Stack automatically picks up all screens from app/ folder */}
       <Stack
         screenOptions={{
@@ -15,7 +33,7 @@ export default function RootLayout() {
         }}
       />
       <StatusBar style="auto" />
-    </>
+    </View>
   );
 }
 
