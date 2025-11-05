@@ -1,5 +1,6 @@
 // app/login.jsx
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
@@ -55,6 +56,7 @@ export default function LoginScreen() {
         throw new Error(data.message || "Login failed");
       }
       Alert.alert("Success", "You have logged in successfully!");
+      await AsyncStorage.setItem("idToken", data.idToken);
       router.replace("/home");
     } catch (error) {
       console.error("Login failed:", error);
