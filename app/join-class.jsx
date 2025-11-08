@@ -55,7 +55,7 @@ export default function JoinClassPage() {
         return;
       }
 
-      Alert.alert("Success", `Joined class: ${classData.name}`);
+      Alert.alert("Successfully Join Class.");
       router.push(`/class/${classData.classroomId}`);
       console.log("classdata id:", classData.classroomId);
     } catch (error) {
@@ -96,7 +96,7 @@ export default function JoinClassPage() {
             <BarcodeScannerModal
               visible={scannerVisible}
               onClose={() => setScannerVisibile(false)}
-              onScanned={handleScanned}
+              onScan={(data) => setClassCode(data)}
             />
 
             <View className="flex-row justify-center items-center gap-4 mt-4 w-[80%] mx-auto">
