@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import { Book, Home } from "lucide-react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 
 const BottomNavBar = () => {
@@ -9,14 +10,16 @@ const BottomNavBar = () => {
         className="items-center py-2"
         onPress={() => router.push("/home")}
       >
-        <Text className="text-secondary text-2xl mb-1">🏠</Text>
-        <Text className="text-secondary text-xs font-semibold">Home</Text>
+        {/* <Text className="text-secondary text-2xl mb-1">🏠</Text> */}
+        <Home color={"white"} />
+        <Text className="text-white text-xs font-semibold">Home</Text>
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => router.push("/assignments")}
         className="items-center py-2"
       >
-        <Text className="text-white text-2xl mb-1">📝</Text>
+        {/* <Text className="text-white text-2xl mb-1">📝</Text> */}
+        <Book color={'white'}/>
         <Text className="text-white text-xs">Assignments</Text>
       </TouchableOpacity>
     </View>

@@ -11,6 +11,8 @@ import {
   View,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import BottomNavBar from "../components/bottom-navbar";
+import UpperNavBar from "../components/upper-navbar";
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -45,32 +47,8 @@ export default function HomeScreen() {
           <StatusBar style="auto" />
 
           <ScrollView showsVerticalScrollIndicator={false}>
-            {/* Header */}
-            <View className="bg-accent px-5 pt-4 pb-6 flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-3">
-                  <Text className="text-accent font-bold text-lg">CL</Text>
-                </View>
-                <View>
-                  <Text className="text-white font-bold text-base">
-                    Chhin Long
-                  </Text>
-                  <Text className="text-white text-xs opacity-80">
-                    Edu Space Classroom
-                  </Text>
-                </View>
-              </View>
-              <View className="flex-row gap-3">
-                <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-                  <Text className="text-white text-lg">🔔</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-                  <Text className="text-white text-lg">👤</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <UpperNavBar />
 
-            {/* Search Bar */}
             <View className="px-5 py-4">
               <TextInput
                 className="w-full bg-white text-primary p-3 rounded-lg text-base"
@@ -92,7 +70,10 @@ export default function HomeScreen() {
                   Enter class code
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity className="flex-1 bg-darkBg rounded-lg p-4 items-center" onPress={()=>router.push('/join-class')}>
+              <TouchableOpacity
+                className="flex-1 bg-darkBg rounded-lg p-4 items-center"
+                onPress={() => router.push("/join-class")}
+              >
                 <Text className="text-secondary text-2xl mb-2">👥</Text>
                 <Text className="text-white font-bold text-sm">Join Class</Text>
                 <Text className="text-white text-xs opacity-70">
@@ -166,23 +147,7 @@ export default function HomeScreen() {
           </ScrollView>
 
           {/* Bottom Navigation */}
-          <View className="bg-darkBg flex-row items-center justify-around py-4 border-t border-accent">
-            <TouchableOpacity className="items-center py-2">
-              <Text className="text-secondary text-2xl mb-1">🏠</Text>
-              <Text className="text-secondary text-xs font-semibold">Home</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="items-center py-2">
-              <Text className="text-white text-2xl mb-1">📊</Text>
-              <Text className="text-white text-xs">Overview</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => router.push("/assignments")}
-              className="items-center py-2"
-            >
-              <Text className="text-white text-2xl mb-1">📝</Text>
-              <Text className="text-white text-xs">Assignments</Text>
-            </TouchableOpacity>
-          </View>
+          <BottomNavBar />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>

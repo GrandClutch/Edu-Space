@@ -3,19 +3,14 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
-import {
-  Alert,
-  Image,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const router = useRouter();
 
@@ -70,15 +65,14 @@ export default function LoginScreen() {
     <View className="flex-1 bg-lightBg items-center my-auto justify-center">
       <StatusBar style="auto" />
 
-      {/* Logo Section */}
-      <View className="w-30 h-30 bg-white rounded-full items-center justify-center shadow-lg">
+      {/* <View className="w-40 h-40 rounded-full bg-white items-center justify-center shadow-xl border border-gray-200 overflow-hidden">
         <Image
           source={require("../../assets/images/edu-space.png")}
-          className="w-20 h-20 rounded-full"
+          className="w-[90%] h-[90%] rounded-full"
+          resizeMode="cover"
         />
-      </View>
+      </View> */}
 
-      {/* Login Card Section */}
       <View className="w-[90%] bg-darkBg rounded-xl p-6 mt-10 shadow-2xl">
         {/* Header */}
         <Text className="text-white text-2xl font-bold mb-1 text-center">
@@ -88,34 +82,44 @@ export default function LoginScreen() {
           Enter your credentials to access your classes
         </Text>
 
-        {/* Email Input */}
         <TextInput
           className="w-full bg-white text-primary p-3 rounded-lg mb-4 text-base"
           placeholder="Email..."
           placeholderTextColor="#A0AEC0"
           keyboardType="email-address"
+          autoCapitalize="none"
           value={email}
           onChangeText={setEmail}
         />
 
-        {/* Password Input */}
-        <TextInput
-          className="w-full bg-white text-primary p-3 rounded-lg mb-2 text-base"
-          placeholder="Password..."
-          placeholderTextColor="#A0AEC0"
-          secureTextEntry
-          value={password}
-          onChangeText={setPassword}
-        />
+        <View className="w-full mb-2 relative">
+          <TextInput
+            className="w-full bg-white text-primary p-3 rounded-lg text-base pr-10"
+            placeholder="Password..."
+            placeholderTextColor="#A0AEC0"
+            secureTextEntry={!showPassword}
+            autoCapitalize="none"
+            value={password}
+            onChangeText={setPassword}
+          />
+          <TouchableOpacity
+            className="absolute right-3 top-1/2 -translate-y-1/2"
+            onPress={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? (
+              <Eye size={20} color="#A0AEC0" />
+            ) : (
+              <EyeOff size={20} color="#A0AEC0" />
+            )}
+          </TouchableOpacity>
+        </View>
 
-        {/* Forgot Password */}
         <TouchableOpacity className="self-end mb-8">
           <Text className="text-secondary text-sm font-semibold">
             Forget password?
           </Text>
         </TouchableOpacity>
 
-        {/* Sign In Button */}
         <TouchableOpacity
           onPress={handleLogin}
           disabled={isLoggingIn}
@@ -126,7 +130,6 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
 
-        {/* Terms and Privacy */}
         <Text className="text-white text-xs text-center mt-6 px-4 opacity-70">
           By clicking continue, you accept our
           <Text className="font-semibold"> Terms of Service </Text>
@@ -135,7 +138,6 @@ export default function LoginScreen() {
         </Text>
       </View>
 
-      {/* Footer */}
       <Text className="absolute bottom-6 text-primary font-semibold text-sm">
         Powered By Edu Space
       </Text>

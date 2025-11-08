@@ -15,6 +15,9 @@ import {
 } from "react-native";
 
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import BottomNavBar from "../../components/bottom-navbar";
+import Heading from "../../components/heading";
+import UpperNavBar from "../../components/upper-navbar";
 
 export default function ClassroomPage() {
   const { classroomId } = useLocalSearchParams();
@@ -137,27 +140,7 @@ export default function ClassroomPage() {
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 bg-lightBg">
         <StatusBar style="auto" />
-        <View className="bg-accent px-5 pt-4 pb-6 flex-row items-center justify-between">
-          <View className="flex-row items-center">
-            <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-3">
-              <Text className="text-accent font-bold text-lg">CL</Text>
-            </View>
-            <View>
-              <Text className="text-white font-bold text-base">Chhin Long</Text>
-              <Text className="text-white text-xs opacity-80">
-                Edu Space Classroom
-              </Text>
-            </View>
-          </View>
-          <View className="flex-row gap-3">
-            <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-              <Text className="text-white text-lg">🔔</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-              <Text className="text-white text-lg">👤</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        <UpperNavBar />
         <ScrollView className="px-4 py-2" showsVerticalScrollIndicator={false}>
           <View className="bg-primary/90 border border-primary/40 rounded-2xl p-5 mb-6 shadow-md shadow-black/30">
             {/* Top Row — Name & Teacher */}
@@ -181,9 +164,10 @@ export default function ClassroomPage() {
             </View>
           </View>
           <View className="mb-6 space-y-3">
-            <Text className="text-lg text-primary font-bold">
-              Class Materials
-            </Text>
+            <Heading
+              title="Class Materials"
+              description={"Manage your class materials here."}
+            />
             {isLoadingMaterials ? (
               <View className="justify-center items-center my-6">
                 <ActivityIndicator size={"small"} color={"white"} />
@@ -236,7 +220,6 @@ export default function ClassroomPage() {
                                   text: "Open",
                                   onPress: () => {
                                     Linking.openURL(file.downloadURL);
-                                    // You can use Linking.openURL(file.downloadURL)
                                   },
                                 },
                                 { text: "Cancel", style: "cancel" },
@@ -366,9 +349,9 @@ export default function ClassroomPage() {
                       <Text className="text-xs text-white/70 mb-2">
                         📎 Attached Files:
                       </Text>
-                      {assignment.files.map((file, i) => (
+                      {assignment.files.map((file, index) => (
                         <TouchableOpacity
-                          key={i}
+                          key={index}
                           onPress={() =>
                             Alert.alert("Open File", file.fileName, [
                               {
@@ -413,6 +396,7 @@ export default function ClassroomPage() {
             )}
           </View>
         </ScrollView>
+        <BottomNavBar />
       </SafeAreaView>
     </SafeAreaProvider>
   );

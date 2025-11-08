@@ -3,6 +3,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { Barcode } from "lucide-react-native";
 import { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -14,11 +15,15 @@ import {
   View,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import BottomNavBar from "../components/bottom-navbar";
+import BarcodeScannerModal from "../components/qrcode-scanner";
+import UpperNavBar from "../components/upper-navbar";
 
 export default function JoinClassPage() {
   const [classCode, setClassCode] = useState("");
   const [isJoining, setIsJoining] = useState(false);
   const [idToken, setIdToken] = useState(null);
+  const [scannerVisible, setScannerVisibile] = useState(false);
   useEffect(() => {
     AsyncStorage.getItem("idToken").then((token) => {
       setIdToken(token);
@@ -60,7 +65,10 @@ export default function JoinClassPage() {
       setIsJoining(false);
     }
   };
-
+  const handleScanned = (code) => {
+    setScannerVisibile(false);
+    setClassCode(code);
+  };
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 bg-lightBg">
@@ -68,41 +76,28 @@ export default function JoinClassPage() {
           <StatusBar style="auto" />
 
           <ScrollView showsVerticalScrollIndicator={false}>
-            {/* Header */}
-            <View className="bg-accent px-5 pt-4 pb-6 flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-3">
-                  <Text className="text-accent font-bold text-lg">CL</Text>
-                </View>
-                <View>
-                  <Text className="text-white font-bold text-base">
-                    Chhin Long
-                  </Text>
-                  <Text className="text-white text-xs opacity-80">
-                    Edu Space Classroom
-                  </Text>
-                </View>
-              </View>
-              <View className="flex-row gap-3">
-                <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-                  <Text className="text-white text-lg">🔔</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-                  <Text className="text-white text-lg">👤</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <UpperNavBar />
 
-            {/* Search Bar */}
-            <View className="px-5 py-4">
+            <View className="flex flex-row items-center justify-center gap-2 px-5 py-4">
               <TextInput
-                className="w-full bg-white text-primary p-3 rounded-lg text-base"
+                className="w-[80%] bg-white text-primary p-3 rounded-lg text-base"
                 placeholder="Enter Class Code..."
                 placeholderTextColor="#A0AEC0"
                 value={classCode}
                 onChangeText={setClassCode}
               />
+              <TouchableOpacity
+                className="w-10 h-10 bg-primary bg-opacity-30 rounded-lg items-center justify-center"
+                onPress={() => setScannerVisibile(true)}
+              >
+                <Barcode color={"white"} />
+              </TouchableOpacity>
             </View>
+            <BarcodeScannerModal
+              visible={scannerVisible}
+              onClose={() => setScannerVisibile(false)}
+              onScanned={handleScanned}
+            />
 
             <View className="flex-row justify-center items-center gap-4 mt-4 w-[80%] mx-auto">
               <TouchableOpacity
@@ -129,27 +124,7 @@ export default function JoinClassPage() {
             Powered By Edu Space
           </Text>
 
-          {/* Bottom Navigation */}
-          <View className="bg-darkBg flex-row items-center justify-around py-4 border-t border-accent">
-            <TouchableOpacity
-              className="items-center py-2"
-              onPress={() => router.push("/home")}
-            >
-              <Text className="text-secondary text-2xl mb-1">🏠</Text>
-              <Text className="text-secondary text-xs font-semibold">Home</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="items-center py-2">
-              <Text className="text-white text-2xl mb-1">📊</Text>
-              <Text className="text-white text-xs">Overview</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => router.push("/assignments")}
-              className="items-center py-2"
-            >
-              <Text className="text-white text-2xl mb-1">📝</Text>
-              <Text className="text-white text-xs">Assignments</Text>
-            </TouchableOpacity>
-          </View>
+          <BottomNavBar />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
