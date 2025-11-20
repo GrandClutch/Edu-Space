@@ -1,5 +1,6 @@
 "use client";
 
+import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import {
   ArrowLeft,
@@ -10,11 +11,40 @@ import {
   MapPin,
   Phone,
 } from "lucide-react-native";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import BottomNavBar from "../components/bottom-navbar";
 
 const Profile = () => {
+  const [profileImage, setProfileImage] = useState(null);
   const router = useRouter();
+
+  const handleImagePicker = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      Alert.alert(
+        "Permission not granted",
+        "Please grant permission to access your media library"
+      );
+      return;
+    }
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+    if (!result.canceled) {
+      setProfileImage(result.assets[0].uri);
+    }
+  };
 
   return (
     <View className="flex-1 bg-lightBg pb-4">
@@ -26,9 +56,21 @@ const Profile = () => {
           <ArrowLeft color="#1E80C9" size={24} />
         </TouchableOpacity>
         <View className="items-center">
-          <View className="w-24 h-24 bg-white rounded-full items-center justify-center mb-3">
+          {/* <View className="w-24 h-24 bg-white rounded-full items-center justify-center mb-3">
             <Text className="text-accent font-bold text-3xl">CL</Text>
-          </View>
+          </View> */}
+          <TouchableOpacity onPress={handleImagePicker}>
+            {profileImage ? (
+              <Image
+                source={{ uri: profileImage }}
+                className="w-12 h-12 rounded-full mr-3"
+              />
+            ) : (
+              <View className="w-24 h-24 bg-white rounded-full items-center justify-center mb-3">
+                <Text className="text-accent font-bold text-3xl">CL</Text>
+              </View>
+            )}
+          </TouchableOpacity>
           <Text className="text-white font-bold text-2xl">Chhin Long</Text>
           <Text className="text-white text-sm opacity-90 mt-1">
             Role: Student
@@ -155,7 +197,7 @@ const Profile = () => {
           </View>
         </View>
       </ScrollView>
-        <BottomNavBar/>
+      <BottomNavBar />
     </View>
   );
 };
