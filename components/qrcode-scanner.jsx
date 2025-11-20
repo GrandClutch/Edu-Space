@@ -46,11 +46,11 @@ const QRScannerModal = ({ visible, onClose, onScan }) => {
             <View className="flex-row">
               <View className="flex-1 bg-black/50" />
 
-              <View className="w-64 h-64 border-2 border-white relative">
-                <View className="absolute top-0 left-0 w-6 h-6 border-t-4 border-l-4 border-white" />
-                <View className="absolute top-0 right-0 w-6 h-6 border-t-4 border-r-4 border-white" />
-                <View className="absolute bottom-0 left-0 w-6 h-6 border-b-4 border-l-4 border-white" />
-                <View className="absolute bottom-0 right-0 w-6 h-6 border-b-4 border-r-4 border-white" />
+              <View className="w-64 h-64 relative">
+                <View className="absolute left-0 top-0  rounded-tl-lg border-l-4 border-t-4 border-white w-8 h-8" />
+                <View className="absolute right-0 top-0  rounded-tr-lg border-r-4 border-t-4 border-white w-8 h-8" />
+                <View className="absolute bottom-0 left-0  rounded-bl-lg border-b-4 border-l-4 border-white w-8 h-8" />
+                <View className="absolute bottom-0 right-0  rounded-br-lg border-b-4 border-r-4 border-white w-8 h-8" />
               </View>
 
               <View className="flex-1 bg-black/50" />
