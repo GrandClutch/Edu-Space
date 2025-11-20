@@ -1,5 +1,6 @@
 "use client";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
 import { useRouter } from "expo-router";
 import {
@@ -11,7 +12,7 @@ import {
   MapPin,
   Phone,
 } from "lucide-react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Alert,
   Image,
@@ -25,6 +26,21 @@ import BottomNavBar from "../components/bottom-navbar";
 const Profile = () => {
   const [profileImage, setProfileImage] = useState(null);
   const router = useRouter();
+
+  useEffect(() => {
+    loadProfileImage();
+  }, []);
+
+  const loadProfileImage = async () => {
+    try {
+      const savedImage = await AsyncStorage.getItem("profileImage");
+      if (savedImage) {
+        setProfileImage(savedImage);
+      }
+    } catch (error) {
+      console.error("Error loading profile image:", error);
+    }
+  };
 
   const handleImagePicker = async () => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -42,7 +58,13 @@ const Profile = () => {
       quality: 1,
     });
     if (!result.canceled) {
-      setProfileImage(result.assets[0].uri);
+      const imageUri = result.assets[0].uri;
+      setProfileImage(imageUri);
+      try {
+        await AsyncStorage.setItem("profileImage", imageUri);
+      } catch (error) {
+        console.error("Error saving profile image:", error);
+      }
     }
   };
 

@@ -1,38 +1,34 @@
 "use client";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as ImagePicker from "expo-image-picker";
-import { useRouter } from "expo-router";
+import { useFocusEffect, useRouter } from "expo-router";
 import { Bell, LogOut, User } from "lucide-react-native";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 
 const UpperNavBar = () => {
   const [profileImage, setProfileImage] = useState(null);
-  const [isLoggingOut, setIsLoggingOut] = useState(false);
   const router = useRouter();
-  const handleImagePicker = async () => {
-    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
-    if (!permission.granted) {
-      Alert.alert(
-        "Permission not granted",
-        "Please grant permission to access your media library"
-      );
-      return;
-    }
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [1, 1],
-      quality: 1,
-    });
-    if (!result.canceled) {
-      setProfileImage(result.assets[0].uri);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadProfileImage();
+    }, [])
+  );
+
+  const loadProfileImage = async () => {
+    try {
+      const savedImage = await AsyncStorage.getItem("profileImage");
+      if (savedImage) {
+        setProfileImage(savedImage);
+      }
+    } catch (error) {
+      console.error("Error loading profile image:", error);
     }
   };
+
   const handleLogout = () => {
     try {
-      setIsLoggingOut(true);
       Alert.alert(
         "Logout",
         "Are you sure you want to logout?",
@@ -54,8 +50,6 @@ const UpperNavBar = () => {
       );
     } catch (error) {
       console.error("Logout failed:", error);
-    } finally {
-      setIsLoggingOut(false);
     }
   };
   return (
@@ -64,18 +58,16 @@ const UpperNavBar = () => {
         {/* <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-3">
           <Text className="text-accent font-bold text-lg">CL</Text>
         </View> */}
-        <TouchableOpacity onPress={handleImagePicker}>
-          {profileImage ? (
-            <Image
-              source={{ uri: profileImage }}
-              className="w-12 h-12 rounded-full mr-3"
-            />
-          ) : (
-            <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-3">
-              <Text className="text-accent font-bold text-lg">CL</Text>
-            </View>
-          )}
-        </TouchableOpacity>
+        {profileImage ? (
+          <Image
+            source={{ uri: profileImage }}
+            className="w-12 h-12 rounded-full mr-3"
+          />
+        ) : (
+          <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-3">
+            <Text className="text-accent font-bold text-lg">CL</Text>
+          </View>
+        )}
         <View>
           <Text className="text-white font-bold text-base">Chhin Long</Text>
           <Text className="text-white text-xs opacity-80">
