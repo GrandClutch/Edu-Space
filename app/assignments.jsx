@@ -150,19 +150,19 @@ export default function AssignmentsScreen() {
                     {assignment.assignmentDetails ? (
                       <>
                         <Text className="text-xs text-white/80">
-                           Frequency:{" "}
+                          Frequency:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.assignmentDetails.frequency || "-"}
                           </Text>
                         </Text>
                         <Text className="text-xs text-white/80">
-                           Count:{" "}
+                          Count:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.assignmentDetails.count ?? "-"}
                           </Text>
                         </Text>
                         <Text className="text-xs text-white/80">
-                           Deadline:{" "}
+                          Deadline:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.assignmentDetails.deadline
                               ? new Date(
@@ -175,7 +175,7 @@ export default function AssignmentsScreen() {
                     ) : (
                       <>
                         <Text className="text-xs text-white/80">
-                           Due Date:{" "}
+                          Due Date:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.dueDate
                               ? new Date(
@@ -224,15 +224,17 @@ export default function AssignmentsScreen() {
 
                   <View className="flex-row justify-around mt-4 gap-4">
                     <TouchableOpacity
-                      className="bg-white px-4 py-2 rounded-full flex-1 mr-2"
-                      onPress={(prev) => setMarkedAsRead(!prev)}
+                      className={`${
+                        markedAsRead ? "bg-green-400" : "bg-white"
+                      } px-4 py-2 rounded-full flex-1 mr-2`}
+                      onPress={() => setMarkedAsRead(!markedAsRead)}
                     >
                       {/* <Text className="text-primary font-semibold text-center text-sm">
                         {markedAsRead ? "Already Marked as Read" : "Mark as Read"}
                       </Text> */}
                       {markedAsRead ? (
-                        <Text className="text-white bg-green-400 font-semibold text-center text-sm">
-                          Already Marked as Read
+                        <Text className="text-white font-semibold text-center text-sm">
+                          Marked as Read
                         </Text>
                       ) : (
                         <Text className="text-primary font-semibold text-center text-sm">
