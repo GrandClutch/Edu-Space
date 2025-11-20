@@ -1,6 +1,7 @@
 "use client";
 
 import { StatusBar } from "expo-status-bar";
+import { Clipboard, Pin } from "lucide-react-native";
 import { useState } from "react";
 import {
   Alert,
@@ -190,9 +191,12 @@ export default function AssignmentsScreen() {
 
                   {assignment.files && assignment.files.length > 0 && (
                     <View className="bg-white/15 rounded-lg p-3 mb-4">
-                      <Text className="text-xs text-white/70 mb-2">
-                        📎 Attached Files:
-                      </Text>
+                      <View className="flex-row items-center mb-2 flex justify-start gap-1">
+                        <Pin color="white" size={10} />
+                        <Text className="text-xs text-white/70 ">
+                          Attached Files:
+                        </Text>
+                      </View>
                       {assignment.files.map((file, fileIndex) => (
                         <TouchableOpacity
                           key={fileIndex}
