@@ -2,7 +2,7 @@
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
-import { Bell, LogOut } from "lucide-react-native";
+import { Bell, LogOut, User } from "lucide-react-native";
 import { useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
 
@@ -54,9 +54,12 @@ const UpperNavBar = () => {
         <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center text-primary">
           <Bell color={"#10266F"} />
         </TouchableOpacity>
-        {/* <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
+        <TouchableOpacity 
+          className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center"
+          onPress={() => router.push("/profile")}
+        >
           <User color={"#10266F"} />
-        </TouchableOpacity> */}
+        </TouchableOpacity>
         <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center" onPress={handleLogout}>
           <LogOut color={"red"} />
         </TouchableOpacity>

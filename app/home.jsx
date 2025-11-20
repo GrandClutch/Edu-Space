@@ -20,14 +20,14 @@ export default function HomeScreen() {
   const classes = [
     {
       id: 1,
-      name: "React Fundamentals",
-      code: "C2345678",
+      name: "Mobile Development",
+      code: "C1234567",
       students: 8,
       assignments: 3,
     },
     {
       id: 2,
-      name: "React Fundamentals",
+      name: "Web Development",
       code: "C2345678",
       students: 8,
       assignments: 3,
@@ -36,7 +36,7 @@ export default function HomeScreen() {
 
   const stats = [
     { label: "Classes", value: "2" },
-    { label: "Students", value: "42" },
+    // { label: "Students", value: "42" },
     { label: "Assignments", value: "5" },
   ];
 
@@ -59,7 +59,6 @@ export default function HomeScreen() {
               />
             </View>
 
-            {/* Create/Join Buttons */}
             <View className="flex-row px-5 gap-3 mb-6">
               <TouchableOpacity className="flex-1 bg-darkBg rounded-lg p-4 items-center">
                 <Text className="text-secondary text-2xl mb-2">➕</Text>
@@ -82,7 +81,6 @@ export default function HomeScreen() {
               </TouchableOpacity>
             </View>
 
-            {/* Your Classes Section */}
             <View className="px-5 mb-6">
               <Text className="text-primary font-bold text-base mb-4">
                 Your classes
@@ -104,14 +102,14 @@ export default function HomeScreen() {
                       <Text className="text-white text-xs opacity-70">
                         Code: {classItem.code}
                       </Text>
-                      <View className="flex-row gap-4 mt-2">
+                      {/* <View className="flex-row gap-4 mt-2">
                         <Text className="text-white text-xs">
                           👥 {classItem.students} students
                         </Text>
                         <Text className="text-white text-xs">
                           📋 {classItem.assignments} assignments
                         </Text>
-                      </View>
+                      </View> */}
                     </View>
                   </View>
                   <View className="bg-secondary px-3 py-1 rounded-full">
@@ -123,7 +121,6 @@ export default function HomeScreen() {
               ))}
             </View>
 
-            {/* Stats Section */}
             <View className="flex-row px-5 gap-3 pb-8">
               {stats.map((stat, idx) => (
                 <View
@@ -139,14 +136,11 @@ export default function HomeScreen() {
                 </View>
               ))}
             </View>
-
-            {/* Footer */}
-            <Text className="text-primary font-semibold text-xs text-center pb-4">
-              Powered By Edu Space
-            </Text>
           </ScrollView>
+          <Text className="text-primary font-semibold text-xs text-center pb-4">
+            Powered By Edu Space
+          </Text>
 
-          {/* Bottom Navigation */}
           <BottomNavBar />
         </View>
       </SafeAreaView>
