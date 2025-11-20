@@ -1,33 +1,110 @@
 "use client";
 
-import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import {
+  Alert,
+  Linking,
   ScrollView,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import AssignmentButton from "../components/assignment-button";
+import BottomNavBar from "../components/bottom-navbar";
+import UpperNavBar from "../components/upper-navbar";
 
 export default function AssignmentsScreen() {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const assignmentTitles = [
+  const [markedAsRead, setMarkedAsRead] = useState(false);
+  // Dummy assignment data with different types
+  const assignments = [
     {
       id: 1,
-      name: "How to Code in React Native",
-      class: "React Fundamentals",
-      done: false,
+      title: "React Native Mobile App Project",
+      type: "submission",
+      description:
+        "Build a complete mobile application using React Native with authentication, navigation, and API integration.",
+      dueDate: "2025-12-15T23:59:59",
+      files: [
+        {
+          fileName: "project-requirements.pdf",
+          downloadURL: "https://example.com/requirements.pdf",
+        },
+        {
+          fileName: "starter-template.zip",
+          downloadURL: "https://example.com/template.zip",
+        },
+      ],
     },
     {
       id: 2,
-      name: "Solve Maths Problems",
-      class: "Math Fundamentals",
-      done: true,
+      title: "Daily JavaScript Practice",
+      type: "practice",
+      description:
+        "Complete coding challenges to improve your JavaScript fundamentals and problem-solving skills.",
+      assignmentDetails: {
+        frequency: "Daily",
+        count: 10,
+        deadline: "2025-12-31T23:59:59",
+      },
+      files: [
+        {
+          fileName: "practice-guide.pdf",
+          downloadURL: "https://example.com/guide.pdf",
+        },
+      ],
+    },
+    {
+      id: 3,
+      title: "Database Design Assignment",
+      type: "submission",
+      description:
+        "Design and implement a relational database schema for an e-commerce platform. Include ER diagrams and SQL scripts.",
+      dueDate: "2025-12-10T23:59:59",
+      files: [
+        {
+          fileName: "database-requirements.docx",
+          downloadURL: "https://example.com/db-requirements.docx",
+        },
+        {
+          fileName: "sample-schema.sql",
+          downloadURL: "https://example.com/schema.sql",
+        },
+        {
+          fileName: "er-diagram-template.png",
+          downloadURL: "https://example.com/er-template.png",
+        },
+      ],
+    },
+    {
+      id: 4,
+      title: "Weekly Algorithm Practice",
+      type: "practice",
+      description:
+        "Solve algorithm problems focusing on data structures, sorting, and searching techniques.",
+      assignmentDetails: {
+        frequency: "Weekly",
+        count: 5,
+        deadline: "2025-12-20T23:59:59",
+      },
+    },
+    {
+      id: 5,
+      title: "UI/UX Design Mockup",
+      type: "submission",
+      description:
+        "Create high-fidelity mockups for a mobile banking application. Include user flow diagrams and interactive prototypes.",
+      dueDate: "2025-12-18T23:59:59",
+      files: [
+        {
+          fileName: "design-brief.pdf",
+          downloadURL: "https://example.com/brief.pdf",
+        },
+        {
+          fileName: "color-palette.png",
+          downloadURL: "https://example.com/colors.png",
+        },
+      ],
     },
   ];
 
@@ -38,82 +115,147 @@ export default function AssignmentsScreen() {
           <StatusBar style="auto" />
 
           <ScrollView showsVerticalScrollIndicator={false}>
-            {/* Header */}
-            <View className="bg-accent px-5 pt-4 pb-6 flex-row items-center justify-between">
-              <View className="flex-row items-center">
-                <View className="w-12 h-12 bg-white rounded-full items-center justify-center mr-3">
-                  <Text className="text-accent font-bold text-lg">CL</Text>
-                </View>
-                <View>
-                  <Text className="text-white font-bold text-base">
-                    Chhin Long
-                  </Text>
-                  <Text className="text-white text-xs opacity-80">
-                    Edu Space Classroom
-                  </Text>
-                </View>
-              </View>
-              <View className="flex-row gap-3">
-                <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-                  <Text className="text-white text-lg">🔔</Text>
-                </TouchableOpacity>
-                <TouchableOpacity className="w-10 h-10 bg-white bg-opacity-30 rounded-full items-center justify-center">
-                  <Text className="text-white text-lg">👤</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+            <UpperNavBar />
 
-            {/* Search Bar */}
-            <View className="px-5 py-4">
-              <TextInput
-                className="w-full bg-white text-primary p-3 rounded-lg text-base"
-                placeholder="Search Assignments..."
-                placeholderTextColor="#A0AEC0"
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-              />
-            </View>
-
-            {/* Your Classes Section */}
-            <View className="px-5 mb-6">
-              <Text className="text-primary font-bold text-base mb-4">
+            <View className="px-5 mb-6 mt-4">
+              <Text className="text-primary font-bold text-lg mb-4">
                 Your Assignments
               </Text>
-              {assignmentTitles.map((assignmentTitle) => (
-                <AssignmentButton
-                  key={assignmentTitle.id}
-                  assignmentTitle={assignmentTitle}
-                />
+
+              {assignments.map((assignment, index) => (
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.9}
+                  className="bg-primary/90 border border-primary/40 rounded-2xl p-5 mb-5 shadow-lg shadow-black/30"
+                >
+                  <View className="flex-row justify-between items-center mb-3">
+                    <Text
+                      numberOfLines={1}
+                      className="text-lg font-bold text-white flex-1 pr-2"
+                    >
+                      {assignment.title}
+                    </Text>
+                    <Text className="text-xs text-white bg-white/20 px-3 py-1 rounded-full">
+                      {assignment.type?.toUpperCase()}
+                    </Text>
+                  </View>
+
+                  {assignment.description && (
+                    <Text className="text-sm text-white/90 mb-4 leading-5">
+                      {assignment.description}
+                    </Text>
+                  )}
+
+                  <View className="space-y-1 mb-3">
+                    {assignment.assignmentDetails ? (
+                      <>
+                        <Text className="text-xs text-white/80">
+                           Frequency:{" "}
+                          <Text className="font-semibold text-white/90">
+                            {assignment.assignmentDetails.frequency || "-"}
+                          </Text>
+                        </Text>
+                        <Text className="text-xs text-white/80">
+                           Count:{" "}
+                          <Text className="font-semibold text-white/90">
+                            {assignment.assignmentDetails.count ?? "-"}
+                          </Text>
+                        </Text>
+                        <Text className="text-xs text-white/80">
+                           Deadline:{" "}
+                          <Text className="font-semibold text-white/90">
+                            {assignment.assignmentDetails.deadline
+                              ? new Date(
+                                  assignment.assignmentDetails.deadline
+                                ).toLocaleDateString()
+                              : "No deadline"}
+                          </Text>
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <Text className="text-xs text-white/80">
+                           Due Date:{" "}
+                          <Text className="font-semibold text-white/90">
+                            {assignment.dueDate
+                              ? new Date(
+                                  assignment.dueDate
+                                ).toLocaleDateString()
+                              : "—"}
+                          </Text>
+                        </Text>
+                      </>
+                    )}
+                  </View>
+
+                  {assignment.files && assignment.files.length > 0 && (
+                    <View className="bg-white/15 rounded-lg p-3 mb-4">
+                      <Text className="text-xs text-white/70 mb-2">
+                        📎 Attached Files:
+                      </Text>
+                      {assignment.files.map((file, fileIndex) => (
+                        <TouchableOpacity
+                          key={fileIndex}
+                          onPress={() =>
+                            Alert.alert("Open File", file.fileName, [
+                              {
+                                text: "Open",
+                                onPress: () =>
+                                  Linking.openURL(file.downloadURL),
+                              },
+                              { text: "Cancel", style: "cancel" },
+                            ])
+                          }
+                          className="flex-row items-center justify-between bg-white/10 px-3 py-2 rounded-lg mb-2"
+                        >
+                          <Text
+                            numberOfLines={1}
+                            className="text-xs text-white/90 flex-1 mr-3"
+                          >
+                            {file.fileName}
+                          </Text>
+                          <Text className="text-xs text-primary bg-white px-2 py-1 rounded-md font-semibold">
+                            View
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  )}
+
+                  <View className="flex-row justify-around mt-4 gap-4">
+                    <TouchableOpacity
+                      className="bg-white px-4 py-2 rounded-full flex-1 mr-2"
+                      onPress={(prev) => setMarkedAsRead(!prev)}
+                    >
+                      {/* <Text className="text-primary font-semibold text-center text-sm">
+                        {markedAsRead ? "Already Marked as Read" : "Mark as Read"}
+                      </Text> */}
+                      {markedAsRead ? (
+                        <Text className="text-white bg-green-400 font-semibold text-center text-sm">
+                          Already Marked as Read
+                        </Text>
+                      ) : (
+                        <Text className="text-primary font-semibold text-center text-sm">
+                          Mark as Read
+                        </Text>
+                      )}
+                    </TouchableOpacity>
+                    <TouchableOpacity className="bg-white px-4 py-2 rounded-full flex-1 ml-2">
+                      <Text className="text-primary font-semibold text-center text-sm">
+                        View Assignment
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </TouchableOpacity>
               ))}
             </View>
 
-            {/* Footer */}
             <Text className="text-primary font-semibold text-xs text-center pb-4">
               Powered By Edu Space
             </Text>
           </ScrollView>
 
-          {/* Bottom Navigation */}
-          <View className="bg-darkBg flex-row items-center justify-around py-4 border-t border-accent">
-            <TouchableOpacity
-              className="items-center py-2"
-              onPress={() => router.push("/home")}
-            >
-              <Text className="text-secondary text-2xl mb-1">🏠</Text>
-              <Text className="text-secondary text-xs font-semibold">Home</Text>
-            </TouchableOpacity>
-            <TouchableOpacity className="items-center py-2">
-              <Text className="text-white text-2xl mb-1">📊</Text>
-              <Text className="text-white text-xs">Overview</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => router.push("/assignments")}
-              className="items-center py-2"
-            >
-              <Text className="text-white text-2xl mb-1">📝</Text>
-              <Text className="text-white text-xs">Assignments</Text>
-            </TouchableOpacity>
-          </View>
+          <BottomNavBar />
         </View>
       </SafeAreaView>
     </SafeAreaProvider>
