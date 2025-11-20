@@ -11,6 +11,7 @@ import {
   Phone,
 } from "lucide-react-native";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import BottomNavBar from "../components/bottom-navbar";
 
 const Profile = () => {
   const router = useRouter();
@@ -154,6 +155,7 @@ const Profile = () => {
           </View>
         </View>
       </ScrollView>
+        <BottomNavBar/>
     </View>
   );
 };
