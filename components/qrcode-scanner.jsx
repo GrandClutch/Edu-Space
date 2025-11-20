@@ -1,13 +1,27 @@
 "use client";
 
-import { CameraView } from "expo-camera";
-import { useRef } from "react";
-import { Modal, Platform, StatusBar, View } from "react-native";
+import { Camera, CameraView } from "expo-camera";
+import { useEffect, useRef } from "react";
+import { Alert, Modal, Platform, StatusBar, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
-const BarcodeScannerModal = ({ visible, onClose, onScan }) => {
+const QRScannerModal = ({ visible, onClose, onScan }) => {
   const qrLock = useRef(false);
+  const [permission, requestPermission] = Camera.useCameraPermissions();
 
+  useEffect(() => {
+    if (visible) {
+      requestPermission();
+      qrLock.current = false;
+    }
+  }, [visible]);
+  if (!permission) return null;
+  if (!permission.granted) {
+    return Alert.alert(
+      "No Camera Permission",
+      "Please grant camera permission to use the QR scanner."
+    );
+  }
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 relative bg-black">
@@ -50,4 +64,4 @@ const BarcodeScannerModal = ({ visible, onClose, onScan }) => {
   );
 };
 
-export default BarcodeScannerModal;
+export default QRScannerModal;

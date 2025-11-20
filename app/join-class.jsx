@@ -1,6 +1,7 @@
 "use client";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Camera } from "expo-camera";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Barcode } from "lucide-react-native";
@@ -16,7 +17,7 @@ import {
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import BottomNavBar from "../components/bottom-navbar";
-import BarcodeScannerModal from "../components/qrcode-scanner";
+import QRScannerModal from "../components/qrcode-scanner";
 import UpperNavBar from "../components/upper-navbar";
 
 export default function JoinClassPage() {
@@ -65,9 +66,21 @@ export default function JoinClassPage() {
       setIsJoining(false);
     }
   };
-  const handleScanned = (code) => {
-    setScannerVisibile(false);
-    setClassCode(code);
+  // const handleScanned = (code) => {
+  //   setScannerVisibile(false);
+  //   setClassCode(code);
+  // };
+  const handleOpenScanner = async () => {
+    const { status } = await Camera.requestCameraPermissionsAsync();
+    if (status !== "granted") {
+      Alert.alert(
+        "Permissions Denied",
+        "Please grant camera permissions to use the QR scanner."
+      );
+      return;
+    } else {
+      setScannerVisibile(true);
+    }
   };
   return (
     <SafeAreaProvider>
@@ -88,12 +101,13 @@ export default function JoinClassPage() {
               />
               <TouchableOpacity
                 className="w-10 h-10 bg-primary bg-opacity-30 rounded-lg items-center justify-center"
-                onPress={() => setScannerVisibile(true)}
+                // onPress={() => setScannerVisibile(true)}
+                onPress={handleOpenScanner}
               >
                 <Barcode color={"white"} />
               </TouchableOpacity>
             </View>
-            <BarcodeScannerModal
+            <QRScannerModal
               visible={scannerVisible}
               onClose={() => setScannerVisibile(false)}
               onScan={(data) => setClassCode(data)}
@@ -119,7 +133,6 @@ export default function JoinClassPage() {
             </View>
           </ScrollView>
 
-          {/* Footer */}
           <Text className="text-primary font-semibold text-xs text-center pb-4">
             Powered By Edu Space
           </Text>

@@ -17,6 +17,7 @@ import {
   askNotificationPermission,
   sendLocalNotification,
 } from "../lib/local-notifications";
+import { Plus, User } from "lucide-react-native";
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -78,7 +79,7 @@ export default function HomeScreen() {
 
             <View className="flex-row px-5 gap-3 mb-6">
               <TouchableOpacity className="flex-1 bg-darkBg rounded-lg p-4 items-center">
-                <Text className="text-secondary text-2xl mb-2">➕</Text>
+                <Plus color="white" size={24} className="mb-2" />
                 <Text className="text-white font-bold text-sm">
                   Create Class
                 </Text>
@@ -90,7 +91,7 @@ export default function HomeScreen() {
                 className="flex-1 bg-darkBg rounded-lg p-4 items-center"
                 onPress={() => router.push("/join-class")}
               >
-                <Text className="text-secondary text-2xl mb-2">👥</Text>
+                <User color="white" size={24} className="mb-2" />
                 <Text className="text-white font-bold text-sm">Join Class</Text>
                 <Text className="text-white text-xs opacity-70">
                   Enter class code
