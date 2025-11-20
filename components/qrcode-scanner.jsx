@@ -7,21 +7,21 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 const QRScannerModal = ({ visible, onClose, onScan }) => {
   const qrLock = useRef(false);
-  const [permission, requestPermission] = Camera.useCameraPermissions();
+  // const [permission, requestPermission] = Camera.useCameraPermissions();
 
-  useEffect(() => {
-    if (visible) {
-      requestPermission();
-      qrLock.current = false;
-    }
-  }, [visible]);
-  if (!permission) return null;
-  if (!permission.granted) {
-    return Alert.alert(
-      "No Camera Permission",
-      "Please grant camera permission to use the QR scanner."
-    );
-  }
+  // useEffect(() => {
+  //   if (visible) {
+  //     requestPermission();
+  //     qrLock.current = false;
+  //   }
+  // }, [visible]);
+  // if (!permission) return null;
+  // if (!permission.granted) {
+  //   return Alert.alert(
+  //     "No Camera Permission",
+  //     "Please grant camera permission to use the QR scanner."
+  //   );
+  // }
   return (
     <SafeAreaProvider>
       <SafeAreaView className="flex-1 relative bg-black">

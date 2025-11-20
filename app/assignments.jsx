@@ -1,7 +1,8 @@
 "use client";
 
+import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { Clipboard, Pin } from "lucide-react-native";
+import { Pin } from "lucide-react-native";
 import { useState } from "react";
 import {
   Alert,
@@ -16,6 +17,7 @@ import BottomNavBar from "../components/bottom-navbar";
 import UpperNavBar from "../components/upper-navbar";
 
 export default function AssignmentsScreen() {
+  const router = useRouter();
   const [markedAsRead, setMarkedAsRead] = useState(false);
   // Dummy assignment data with different types
   const assignments = [
@@ -202,12 +204,12 @@ export default function AssignmentsScreen() {
                           key={fileIndex}
                           onPress={() =>
                             Alert.alert("Open File", file.fileName, [
+                              { text: "Cancel", style: "cancel" },
                               {
                                 text: "Open",
                                 onPress: () =>
                                   Linking.openURL(file.downloadURL),
                               },
-                              { text: "Cancel", style: "cancel" },
                             ])
                           }
                           className="flex-row items-center justify-between bg-white/10 px-3 py-2 rounded-lg mb-2"
@@ -246,7 +248,10 @@ export default function AssignmentsScreen() {
                         </Text>
                       )}
                     </TouchableOpacity>
-                    <TouchableOpacity className="bg-white px-4 py-2 rounded-full flex-1 ml-2">
+                    <TouchableOpacity
+                      className="bg-white px-4 py-2 rounded-full flex-1 ml-2"
+                      onPress={() => router.push("/assignment-submit")}
+                    >
                       <Text className="text-primary font-semibold text-center text-sm">
                         View Assignment
                       </Text>

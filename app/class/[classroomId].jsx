@@ -27,6 +27,7 @@ export default function ClassroomPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingMaterials, setIsloadingMaterials] = useState(false);
   const [isLoadingAssignments, setIsLoadingAssignments] = useState(false);
+  const [markedAsRead, setMarkedAsRead] = useState(false);
 
   const fetchClassroom = async () => {
     if (!classroomId) return;
@@ -243,11 +244,26 @@ export default function ClassroomPage() {
                     </View>
                   )}
 
-                  {/* Buttons */}
-                  <View className="flex-row justify-end">
-                    <TouchableOpacity className="bg-white px-4 py-2 rounded-full">
-                      <Text className="text-primary font-semibold text-sm">
-                        Mark as Read
+                  <View className="flex-row justify-around mt-4 gap-4">
+                    <TouchableOpacity
+                      className={`${
+                        markedAsRead ? "bg-green-400" : "bg-white"
+                      } px-4 py-2 rounded-full flex-1 mr-2`}
+                      onPress={() => setMarkedAsRead(!markedAsRead)}
+                    >
+                      {markedAsRead ? (
+                        <Text className="text-white font-semibold text-center text-sm">
+                          Marked as Read
+                        </Text>
+                      ) : (
+                        <Text className="text-primary font-semibold text-center text-sm">
+                          Mark as Read
+                        </Text>
+                      )}
+                    </TouchableOpacity>
+                    <TouchableOpacity className="bg-white px-4 py-2 rounded-full flex-1 ml-2">
+                      <Text className="text-primary font-semibold text-center text-sm">
+                        View Materials
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -304,19 +320,19 @@ export default function ClassroomPage() {
                     {assignment.assignmentDetails ? (
                       <>
                         <Text className="text-xs text-white/80">
-                          🔁 Frequency:{" "}
+                          Frequency:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.assignmentDetails.frequency || "-"}
                           </Text>
                         </Text>
                         <Text className="text-xs text-white/80">
-                          🔢 Count:{" "}
+                          Count:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.assignmentDetails.count ?? "-"}
                           </Text>
                         </Text>
                         <Text className="text-xs text-white/80">
-                          ⏰ Deadline:{" "}
+                          Deadline:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.assignmentDetails.deadline
                               ? new Date(
@@ -330,7 +346,7 @@ export default function ClassroomPage() {
                       <>
                         {/* For “submission” type */}
                         <Text className="text-xs text-white/80">
-                          📅 Due Date:{" "}
+                          Due Date:{" "}
                           <Text className="font-semibold text-white/90">
                             {assignment.dueDate
                               ? new Date(
@@ -378,12 +394,22 @@ export default function ClassroomPage() {
                     </View>
                   )}
 
-                  {/* Buttons */}
                   <View className="flex-row justify-around mt-4 gap-4">
-                    <TouchableOpacity className="bg-white px-4 py-2 rounded-full flex-1 mr-2">
-                      <Text className="text-primary font-semibold text-center text-sm">
-                        Mark as Read
-                      </Text>
+                    <TouchableOpacity
+                      className={`${
+                        markedAsRead ? "bg-green-400" : "bg-white"
+                      } px-4 py-2 rounded-full flex-1 mr-2`}
+                      onPress={() => setMarkedAsRead(!markedAsRead)}
+                    >
+                      {markedAsRead ? (
+                        <Text className="text-white font-semibold text-center text-sm">
+                          Marked as Read
+                        </Text>
+                      ) : (
+                        <Text className="text-primary font-semibold text-center text-sm">
+                          Mark as Read
+                        </Text>
+                      )}
                     </TouchableOpacity>
                     <TouchableOpacity className="bg-white px-4 py-2 rounded-full flex-1 ml-2">
                       <Text className="text-primary font-semibold text-center text-sm">
