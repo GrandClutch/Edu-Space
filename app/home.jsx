@@ -2,7 +2,7 @@
 
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   ScrollView,
   Text,
@@ -13,6 +13,10 @@ import {
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import BottomNavBar from "../components/bottom-navbar";
 import UpperNavBar from "../components/upper-navbar";
+import {
+  askNotificationPermission,
+  sendLocalNotification,
+} from "../lib/local-notifications";
 
 export default function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -39,6 +43,19 @@ export default function HomeScreen() {
     // { label: "Students", value: "42" },
     { label: "Assignments", value: "5" },
   ];
+  //below was for push notifications
+  // const useEffect =
+  //   (() => {
+  //     async function setUpPushNotification() {
+  //       const token = await registerForPushNotificationsAsync();
+  //       console.log("My device token:", token);
+  //     }
+  //     setUpPushNotification();
+  //   },
+  //   []);
+  useEffect(() => {
+    askNotificationPermission();
+  }, []);
 
   return (
     <SafeAreaProvider>
@@ -137,6 +154,10 @@ export default function HomeScreen() {
               ))}
             </View>
           </ScrollView>
+          <TouchableOpacity className='bg-darkBg rounded-lg  p-4 items-center mx-4' onPress={sendLocalNotification}>
+            <Text className="text-white font-bold text-sm">Send Test Notification</Text>
+          </TouchableOpacity>
+
           <Text className="text-primary font-semibold text-xs text-center pb-4">
             Powered By Edu Space
           </Text>
