@@ -5,7 +5,14 @@ import { useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { Eye, EyeOff } from "lucide-react-native";
 import { useState } from "react";
-import { Alert, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -74,6 +81,17 @@ export default function LoginScreen() {
       </View> */}
 
       <View className="w-[90%] bg-darkBg rounded-xl p-6 mt-10 shadow-2xl">
+        {/* Logo */}
+        <View className="w-full items-center mb-6">
+          <View className="w-24 h-24 rounded-full bg-white items-center justify-center shadow-lg border-4 border-accent overflow-hidden">
+            <Image
+              source={require("../../assets/images/edu-space.png")}
+              className="w-full h-full"
+              resizeMode="cover"
+            />
+          </View>
+        </View>
+
         {/* Header */}
         <Text className="text-white text-2xl font-bold mb-1 text-center">
           Welcome Back
