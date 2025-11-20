@@ -85,7 +85,7 @@ const Profile = () => {
             {profileImage ? (
               <Image
                 source={{ uri: profileImage }}
-                className="w-12 h-12 rounded-full mr-3"
+                className="w-24 h-24 rounded-full mr-3"
               />
             ) : (
               <View className="w-24 h-24 bg-white rounded-full items-center justify-center mb-3">
