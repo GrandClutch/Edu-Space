@@ -1,50 +1,36 @@
-# Welcome to your Expo app 👋
+# EDU SPACE
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Project Overview:
+1. Simple React Native digital classroom project for students
+2. Exploring and Implementing Native Features
 
-## Get started
+## Screens:
+1. Login Page
+2. Home Page
+3. Assignments Page
+4. Join Class Page
+5. Individual Class Page
+6. Assignments Submission Page
 
-1. Install dependencies
+## API Integrations (given-ready Postman Collection) used for:
+1. Login and Authentication
+2. Join Classroom
+3. Get Classroom details, materials and assignemnts
 
-   ```bash
-   npm install
-   ```
+## Navigations (TABS):
+1. Upper-Navbar: route to Profile-Settings, Logout and Notifications page
+2. Bottom-Navbar: route to Home Page and Assignments page
 
-2. Start the app
+## Native Features:
+1. QR Code Scanner for classcode to join classroom (expo-camera)
+2. Local Test Push Notification (expo-notifications)
+3. Image Picker for Profile-Settings page (expo-image-picker)
+   
+## Preview
+<img width="591" height="1227" alt="image" src="https://github.com/user-attachments/assets/53c3650e-851b-4c24-850d-50d0c166c735" />
+<img width="591" height="1233" alt="image" src="https://github.com/user-attachments/assets/d7f01d44-ff29-43bd-abae-4bac6c17b88a" />
+<img width="591" height="1238" alt="image" src="https://github.com/user-attachments/assets/e0eca552-47d6-4bcc-a8d1-f88bb0f62ed2" />
+<img width="591" height="1238" alt="image" src="https://github.com/user-attachments/assets/35143f4f-052b-4cc1-9368-fc57a900285f" />
+<img width="591" height="1238" alt="image" src="https://github.com/user-attachments/assets/860ea877-86bd-42cd-80db-4dd7329b3e47" />
+<img width="591" height="1233" alt="image" src="https://github.com/user-attachments/assets/fe0c69cd-a5f6-4af6-80b4-0d9efa991a0b" />
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
